@@ -1,0 +1,2 @@
+# LuaMeat
+Lua IRC bot
