@@ -1,0 +1,20 @@
+-- config file template - copy this to config.lua
+
+-- IRC Config
+network = "irc.twitch.tv"   -- network to connect (my default for quakenet)
+nick = "YourStupidBot"
+defaulChannels = {"#YourStupidBot", "#otherchannel"} --channels to join on startup
+username = "YourStupidBot"
+realname = "Stupid Lua IRC bot for twitch"
+password = "oauth:<oauth_key>"
+
+-- Plugin configs
+yt_api_key = "<APIKeyFromGoogle>"
+
+---------------------------
+-- Add plugins here!
+---------------------------
+require('plugin.twitch')
+require('plugin.google')
+require('plugin.calc')
+require('plugin.youtube')
