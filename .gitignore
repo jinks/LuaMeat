@@ -39,3 +39,8 @@ luac.out
 *.x86_64
 *.hex
 
+# Vim backup files
+*~
+
+# Config file (contains private data)
+config.lua
