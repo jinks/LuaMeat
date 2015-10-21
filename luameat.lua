@@ -11,6 +11,7 @@ require('config')
 irc.DEBUG = true
 
 irc.register_callback("connect", function()
+    irc.send("CAP REQ  :twitch.tv/membership") -- request twitch to send join/paty notices...
     for i,v in ipairs(defaulChannels) do
         irc.join(v)
     end
