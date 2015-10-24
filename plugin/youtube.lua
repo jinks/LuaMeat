@@ -6,7 +6,7 @@ local function fetch_title (videoid)
   --local response = {}
   local r,c,h = https.request("https://www.googleapis.com/youtube/v3/videos?id="..videoid.."&key="..yt_api_key.."&part=snippet&fields=items(snippet(title))")
   local j = json.decode(r)
-  if j then
+  if j and next(j.items) then
     return j.items[1].snippet.title
   end
 end
