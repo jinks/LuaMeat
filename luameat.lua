@@ -1,10 +1,14 @@
 require "luarocks.loader"
 local irc = require 'irc'
-require('socket.http')
+sqlite3 = require "lsqlite3"
 
 
 plugin = {}
 callback = {}
+on_join = {}
+on_part = {}
+
+DB = sqlite3.open("bot.db")
 
 require('config')
 
@@ -29,6 +33,23 @@ irc.register_callback("channel_msg", function(channel, from, message)
     end
 end)
 
+irc.register_callback("join", function(channel, from)
+                        for k,v in pairs(on_join) do
+                          if type(v) == "function" then
+                            v(channel.name, from)
+                          end
+                        end
+end)
+
+irc.register_callback("part", function(channel, from, message)
+                        for k,v in pairs(on_part) do
+                          if type(v) == "function" then
+                            v(channel.name, from)
+                          end
+                        end
+end)
+
+
 -- irc.register_callback("private_msg", function(from, message)
 --     local is_cmd, cmd, arg = message:match("^(!)(%w+) (.*)$")
 --     if is_cmd and plugin[cmd] then
@@ -44,5 +65,6 @@ end)
 irc.register_callback("nick_change", function(from, old_nick)
 end)
 --]]
+
 irc.connect{network = network, port = port, nick = nick, username = username, realname = realname, pass = password}
 
