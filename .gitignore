@@ -44,3 +44,6 @@ luac.out
 
 # Config file (contains private data)
 config.lua
+
+# Database
+bot.db

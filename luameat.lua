@@ -16,13 +16,14 @@ irc.DEBUG = true
 
 irc.register_callback("connect", function()
     irc.send("CAP REQ  :twitch.tv/membership") -- request twitch to send join/paty notices...
+    --irc.send("CAP REQ  :twitch.tv/tags") -- request twitch to send userinfo...
     for i,v in ipairs(defaulChannels) do
         irc.join(v)
     end
 end)
 
 irc.register_callback("channel_msg", function(channel, from, message)
-    local is_cmd, cmd, arg = message:match("^(@)(%w+)%s*(.*)$")
+    local is_cmd, cmd, arg = message:match("^([@!])(%w+)%s*(.*)$")
     if is_cmd and plugin[cmd] then
         plugin[cmd](channel.name, from, arg)
     end
@@ -65,6 +66,9 @@ end)
 irc.register_callback("nick_change", function(from, old_nick)
 end)
 --]]
-
-irc.connect{network = network, port = port, nick = nick, username = username, realname = realname, pass = password}
+while true do
+    irc.connect{network = network, port = port, nick = nick, username = username, realname = realname, pass = password}
+    print("Disconnected...")
+    os.execute("sleep 10")
+end
 
